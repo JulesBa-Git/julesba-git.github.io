@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jules Bangard's personnal webpage">
+    <title>Jules Bangard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/darkMode.png" type="images/png">
+</head>
+<body class="light-theme">
+
+  <!-- Sidebar Button -->
+  <button id="sidebar-toggle" class="sidebar-toggle">
+      ☰
+  </button>
+
+  <!-- Sidebar Menu -->
+  <div id="sidebar" class="sidebar">
+     <a href="#home">Home</a>
+     <a href="#research">Research</a>
+     <a href="#cv">CV</a>
+     <a href="#teaching">Teaching</a>
+     <a href="#contact">Contact</a>
+  </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#research">Research</a></li>
+            <li><a href="#cv">CV</a></li>
+            <li><a href="#teaching">Teaching</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+        <img id="theme-toggle" src="images/darkMode.png" alt="Toggle Dark Mode" class="theme-toggle-button">
+
+    <!-- Home -->
+    <section id="home" class="section">
+        <div class="content">
+            <h1>Jules Bangard</h1>
+            <img src=images/moi.png alt="Jules Bangard" class=profile-pic>
+            <p>I'm a PhD Student at the <a href="https://irma.math.unistra.fr/" target="_blank" rel="noopener noreferrer">IRMA laboratory</a> of the Université de Strasbourg as part of the Statistics team. I'm under the supervision of <a href ="https://irma.math.unistra.fr/~birmele" target="_blank" rel="noopener noreferrer">Étienne Birmelé</a>. My thesis subject is <u>Statistical Algorithms for the detection of drug cocktails' adverse events</u>.</p>
+            <p>I'm more broadly interested in statistical and machine learning methods with a focus on medical applications. I spend most of my time coding a C++ R package called <b>emcAdr</b> which you can find <a href="https://github.com/JulesBa-Git/emcAdr" target="_blank" rel="noopener noreferrer">here</a>. Feel free to bring to my attention any remarks you have about the package/method.</p>
+            <p>Currently we experience our methods on the Food & Drug Administration open-access pharmacovigilance dataset <a href="https://open.fda.gov/data/faers/" target="_blank" rel="noopener noreferrer">FAERS</a> in order to detect high risk drug interactions.
+        </div>
+    </section>
+
+    <!-- Research -->
+    <section id="research" class="section">
+        <div class="content">
+            <h2>Research</h2>
+            <p>Explore my talks and publications</p>
+            <h3>Talks : </h3>
+            <ul>
+              <li><b>December 2024 :</b> <u>Statistical algorithm for the detection of drug interactions</u>, <i>International Biometrics Conference</i>, Atlanta, United States.</li>
+                <li><b>May 2024 :</b> Oral contribution at the conference <i>Journées de  Statistique (Statistics Days), Bordeaux, France</i>.</li>
+                <li><b>May 2024 :</b> Introductory talk about Monte-Carlo Markov Chain and Genetic Algorithm methods for the detection of at risk drug interactions.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- CV -->
+    <section id="cv" class="section">
+        <div class="content">
+            <h2>Academic Path</h2>
+            <ul>
+              <li><b>2023-present :</b> PhD in Statistics at the <a href="https://irma.math.unistra.fr/" target="_blank" rel="noopener noreferrer">IRMA laboratory</a> of the Université de Strasbourg under the supervision of <a href="https://irma.math.unistra.fr/~birmele" target="_blank" rel="noopener noreferrer">Étienne Birmelé</a>.</li>
+                <li><b>2021-2023 :</b> Master's degree in Data Science and Complex Systems at the <a href="https://www.unistra.fr/" target="_blank" rel="noopener noreferrer">Université de Strasbourg</a>, Strasbourg, France.</li>
+                <li><b>2018-2021 :</b> Bachelor's degree in Computer Science at the <a href="https://www.uha.fr/fr/index.html" target="_blank" rel="noopener noreferrer">Université de Haute-Alsace</a>, Mulhouse, France.</li>
+            </ul>
+            <p><a href="docs/CV.pdf" download>Here</a> is my full CV.</p>
+        </div>
+    </section>
+
+    <!-- Teaching -->
+    <section id="teaching" class="section">
+        <div class="content">
+            <h2>Teaching</h2>
+            <p>Brief information about the courses I teach</p>
+            <ul>
+                <li><b>Fall 2023 :</b> Introduction course to statistics for biologists.</li>
+                <li><b>Spring 2024 :</b> General mathematics for biologists.</li>
+                <li><b>Fall 2024 :</b> Introduction course to statistics for biologists.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+        <div class="content">
+            <h2>Contact</h2>
+            <form action="mailto:jbangard@math.unistra.fr" method="post" enctype="text/plain">
+                <label for="message">Message me :</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+            <p> You may also find me in my office at the <a href="https://mathinfo.unistra.fr/">UFR Math-Info</a> of Strasbourg, 7 Rue René Descartes, Strasbourg, office 404, 4th floor.</p>
+            <p> Mail : jbangard@math.unistra.fr</p>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
