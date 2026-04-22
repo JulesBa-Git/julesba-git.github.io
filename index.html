@@ -1,120 +1,952 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jules Bangard's personnal webpage">
-    <title>Jules Bangard</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="images/darkMode.png" type="images/png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jules Bangard — PhD Student in Statistics, Université de Strasbourg">
+  <title>Jules Bangard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── TOKENS ─── */
+    :root {
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --transition: 0.6s var(--ease);
+    }
+
+    /* ─── PALETTE A: Ivory + Indigo (default light) ─── */
+    .palette-A {
+      --bg:        oklch(97% 0.008 80);
+      --bg-alt:    oklch(94% 0.010 80);
+      --fg:        oklch(14% 0.020 265);
+      --fg-muted:  oklch(45% 0.015 265);
+      --accent:    oklch(42% 0.160 265);
+      --accent-h:  oklch(35% 0.180 265);
+      --border:    oklch(87% 0.010 80);
+      --nav-bg:    oklch(97% 0.008 80 / 0.92);
+    }
+    .palette-A.dark {
+      --bg:        oklch(11% 0.015 265);
+      --bg-alt:    oklch(15% 0.018 265);
+      --fg:        oklch(95% 0.005 80);
+      --fg-muted:  oklch(65% 0.010 80);
+      --accent:    oklch(72% 0.130 265);
+      --accent-h:  oklch(80% 0.140 265);
+      --border:    oklch(22% 0.020 265);
+      --nav-bg:    oklch(11% 0.015 265 / 0.92);
+    }
+
+    /* ─── PALETTE B: Bone + Amber ─── */
+    .palette-B {
+      --bg:        oklch(97% 0.008 95);
+      --bg-alt:    oklch(93% 0.012 85);
+      --fg:        oklch(13% 0.015 60);
+      --fg-muted:  oklch(45% 0.020 60);
+      --accent:    oklch(52% 0.170 50);
+      --accent-h:  oklch(44% 0.180 45);
+      --border:    oklch(87% 0.014 85);
+      --nav-bg:    oklch(97% 0.008 95 / 0.92);
+    }
+    .palette-B.dark {
+      --bg:        oklch(12% 0.012 60);
+      --bg-alt:    oklch(16% 0.015 60);
+      --fg:        oklch(96% 0.005 80);
+      --fg-muted:  oklch(65% 0.012 80);
+      --accent:    oklch(76% 0.160 50);
+      --accent-h:  oklch(82% 0.170 50);
+      --border:    oklch(22% 0.018 60);
+      --nav-bg:    oklch(12% 0.012 60 / 0.92);
+    }
+
+    /* ─── PALETTE C: White + Vermillion ─── */
+    .palette-C {
+      --bg:        oklch(99% 0.002 0);
+      --bg-alt:    oklch(96% 0.004 10);
+      --fg:        oklch(10% 0.005 0);
+      --fg-muted:  oklch(45% 0.008 0);
+      --accent:    oklch(52% 0.200 25);
+      --accent-h:  oklch(44% 0.210 22);
+      --border:    oklch(88% 0.005 0);
+      --nav-bg:    oklch(99% 0.002 0 / 0.92);
+    }
+    .palette-C.dark {
+      --bg:        oklch(10% 0.005 0);
+      --bg-alt:    oklch(14% 0.008 0);
+      --fg:        oklch(97% 0.002 0);
+      --fg-muted:  oklch(60% 0.008 0);
+      --accent:    oklch(68% 0.190 25);
+      --accent-h:  oklch(74% 0.200 25);
+      --border:    oklch(22% 0.010 0);
+      --nav-bg:    oklch(10% 0.005 0 / 0.92);
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.6;
+      transition: background-color 0.4s, color 0.4s;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-h); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 60px;
+      transition: background 0.3s;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--fg);
+      letter-spacing: 0.01em;
+    }
+    .nav-logo:hover { text-decoration: none; color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); text-decoration: none; }
+
+    .nav-controls { display: flex; align-items: center; gap: 1rem; }
+
+    .dark-toggle {
+      background: none; border: 1px solid var(--border);
+      color: var(--fg-muted);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.72rem;
+      font-family: var(--sans);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dark-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Mobile nav */
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      background: none; border: none;
+      cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--fg); border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 60px 0 0 0;
+      background: var(--bg);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--fg);
+    }
+    .mobile-menu a:hover { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 680px) {
+      .nav-links, .dark-toggle { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ─── HERO ─── */
+    #home {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 7vw 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-header {
+      display: flex;
+      align-items: center;
+      gap: 5rem;
+      margin-bottom: 2rem;
+    }
+
+
+
+    .hero-text { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; width: 100%; }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      color: var(--fg);
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--fg-muted);
+      line-height: 1.7;
+      max-width: 42ch;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-desc strong { color: var(--fg); font-weight: 600; }
+
+    .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      font-family: var(--sans);
+      text-decoration: none !important;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+    }
+    .btn-primary:hover { background: var(--accent-h); color: var(--bg); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--fg);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-photo {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; align-items: center;
+    }
+
+    .photo-frame {
+      width: clamp(140px, 16vw, 220px);
+      height: clamp(140px, 16vw, 220px);
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-alt);
+      border: 3px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .photo-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .photo-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1rem;
+      color: var(--fg-muted);
+    }
+
+    .photo-badge {
+      display: none;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--fg-muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+    .scroll-hint svg { width: 20px; height: 20px; }
+
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    @media (max-width: 780px) {
+      #home { padding-top: 100px; text-align: center; }
+      .hero-header { flex-direction: column; align-items: center; gap: 1.5rem; }
+      .photo-frame { width: 110px; height: 110px; }
+      .hero-desc { max-width: 100%; }
+      .hero-links { justify-content: center; }
+    }
+
+    /* ─── SECTIONS ─── */
+    section:not(#home) {
+      padding: 7rem 5vw;
+      border-top: 1px solid var(--border);
+    }
+
+    #research, #teaching { background: var(--bg-alt); }
+    #cv, #contact { background: var(--bg); }
+
+    .section-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+      color: var(--fg);
+    }
+
+    /* ─── RESEARCH ─── */
+    .subsection-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .talk-list, .pub-list { list-style: none; margin-bottom: 3rem; }
+
+    .talk-item {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+
+    .talk-date {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      padding-top: 2px;
+    }
+
+    .talk-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      color: var(--fg);
+      margin-bottom: 0.25rem;
+    }
+
+    .talk-venue {
+      font-size: 0.82rem;
+      color: var(--fg-muted);
+      font-style: italic;
+    }
+
+    .pub-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .pub-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .pub-authors {
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .pub-title {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--fg);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .pub-venue {
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── CV ─── */
+    .timeline { list-style: none; position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 4px; bottom: 4px;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      gap: 1.5rem;
+      padding-bottom: 2.5rem;
+      position: relative;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-dot {
+      width: 15px; height: 15px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .timeline-period {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-role {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      color: var(--fg);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .timeline-place {
+      font-size: 0.85rem;
+      color: var(--fg-muted);
+    }
+
+    .cv-download {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── TEACHING ─── */
+    .course-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 580px) { .course-grid { grid-template-columns: 1fr; } }
+
+    .course-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .course-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .course-period {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .course-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--fg);
+      line-height: 1.4;
+    }
+
+    /* ─── CONTACT ─── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    @media (max-width: 640px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .contact-info p {
+      font-size: 0.9rem;
+      color: var(--fg-muted);
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+    .contact-info strong { color: var(--fg); }
+
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.88rem;
+      color: var(--fg-muted);
+    }
+    .contact-detail svg { flex-shrink: 0; margin-top: 1px; color: var(--accent); }
+
+    form { display: flex; flex-direction: column; gap: 1rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+    }
+
+    input, textarea {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      font-family: var(--sans);
+      color: var(--fg);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    input:focus, textarea:focus { border-color: var(--accent); }
+    textarea { resize: vertical; min-height: 130px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 5vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--fg-muted);
+    }
+
+    /* ─── ANIMATE ON SCROLL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+  
+  
+    .toggle-switch {
+      position: relative; width: 40px; height: 22px;
+      flex-shrink: 0;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute; inset: 0;
+      background: var(--border);
+      border-radius: 22px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 16px; height: 16px;
+      left: 3px; top: 3px;
+      background: var(--bg);
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .toggle-switch input:checked + .toggle-slider { background: var(--accent); }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(18px); }
+  </style>
 </head>
-<body class="light-theme">
+<body class="palette-C" id="body">
 
-  <!-- Sidebar Button -->
-  <button id="sidebar-toggle" class="sidebar-toggle">
-      ☰
-  </button>
+  <!-- NAV -->
+  <nav>
+    <a href="#home" class="nav-logo">Jules Bangard</a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#cv">CV</a></li>
+      <li><a href="#teaching">Teaching</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-controls">
+      <button class="dark-toggle" id="dark-btn">Dark</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
 
-  <!-- Sidebar Menu -->
-  <div id="sidebar" class="sidebar">
-     <a href="#home">Home</a>
-     <a href="#research">Research</a>
-     <a href="#cv">CV</a>
-     <a href="#teaching">Teaching</a>
-     <a href="#contact">Contact</a>
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#home" class="mob-link">Home</a>
+    <a href="#research" class="mob-link">Research</a>
+    <a href="#cv" class="mob-link">CV</a>
+    <a href="#teaching" class="mob-link">Teaching</a>
+    <a href="#contact" class="mob-link">Contact</a>
   </div>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#research">Research</a></li>
-            <li><a href="#cv">CV</a></li>
-            <li><a href="#teaching">Teaching</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-        <img id="theme-toggle" src="images/darkMode.png" alt="Toggle Dark Mode" class="theme-toggle-button">
-
-    <!-- Home -->
-    <section id="home" class="section">
-        <div class="content">
-            <h1>Jules Bangard</h1>
-            <img src=images/moi.png alt="Jules Bangard" class=profile-pic>
-            <p>I'm a PhD Student at the <a href="https://irma.math.unistra.fr/" target="_blank" rel="noopener noreferrer">IRMA laboratory</a> of the Université de Strasbourg as part of the Statistics team. I'm under the supervision of <a href ="https://irma.math.unistra.fr/~birmele" target="_blank" rel="noopener noreferrer">Étienne Birmelé</a>. My thesis subject is <u>Statistical Algorithms for the detection of drug cocktails' adverse events</u>.</p>
-            <p>I'm more broadly interested in statistical and machine learning methods with a focus on medical applications. I spend most of my time coding a C++ R package called <b>emcAdr</b> which you can find <a href="https://github.com/JulesBa-Git/emcAdr" target="_blank" rel="noopener noreferrer">on my GitHub</a>. Feel free to bring to my attention any remarks you have about the package/method.</p>
-            <p>Currently we experience our methods on the Food & Drug Administration open-access pharmacovigilance dataset <a href="https://open.fda.gov/data/faers/" target="_blank" rel="noopener noreferrer">FAERS</a> in order to detect high risk drug interactions.
+  <!-- HOME -->
+  <section id="home" data-screen-label="01 Home">
+    <div class="hero-text">
+      <div class="hero-header">
+        <div>
+          <div class="hero-tag">PhD Student · Statistics</div>
+          <h1 class="hero-name">Jules<br><em>Bangard</em></h1>
         </div>
-    </section>
-
-    <!-- Research -->
-    <section id="research" class="section">
-        <div class="content">
-            <h2>Research</h2>
-            <p>Explore my talks and publications</p>
-            <h3>Talks : </h3>
-            <ul>
-              <li><b>December 2024 :</b> <u>Statistical algorithm for the detection of drug interactions</u>, <i>International Biometrics Conference</i>, Atlanta, United States.</li>
-              <li><b>November 2024 :</b> <u>Introduction to conformal prediction</u>, <i>PhD Seminar</i>, Strasbourg, France.</li>
-              <li><b>May 2024 :</b> Oral contribution at the conference <i>Journées de Statistique (Statistics Days)</i>, Bordeaux, France.</li>
-              <li><b>May 2024 :</b> <u>Introductory talk about Monte-Carlo Markov Chain and Genetic Algorithm methods for the detection of at risk drug interactions</u>, <i>PhD Seminar</i>, Strasbourg, France.</li>
-            </ul>
-            <h3>Preprints : </h3>
-            <ul>
-                <li>J. Bangard, E. Holsbø, K. Svendsen, V. Perduca, E. Birmelé <a href="https://hal.science/hal-05012416" target="_blank" rel="noopener noreferrer">Detecting adverse high-order drug interactions from individual case safety reports using computational statistics on disproportionality measures</a></li>
-            </ul>
+        <div class="hero-photo">
+          <div class="photo-frame">
+            <img src="images/moi.png" alt="Jules Bangard" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="photo-placeholder" style="display:none">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
+      <p class="hero-desc" style="width:800px;max-width:100%">
+        I'm a PhD Student at the <a href="https://irma.math.unistra.fr/" target="_blank" rel="noopener noreferrer">IRMA laboratory</a> of the Université de Strasbourg, Statistics team, supervised by <a href="https://irma.math.unistra.fr/~birmele" target="_blank" rel="noopener noreferrer">Étienne Birmelé</a>. My thesis focuses on <strong>Statistical Algorithms for the detection of drug cocktails' adverse events</strong>. I'm broadly interested in statistical and machine learning methods with a focus on medical applications. I am the main developer of <a href="https://github.com/JulesBa-Git/emcAdr" target="_blank" rel="noopener noreferrer">emcAdr</a>, a C++ R package I built for detecting high-risk drug interactions from the FDA's <a href="https://open.fda.gov/data/faers/" target="_blank" rel="noopener noreferrer">FAERS</a> dataset.
+      </p>
+      <div class="hero-links">
+        <a href="#research" class="btn btn-primary">View Research</a>
+        <a href="https://github.com/JulesBa-Git" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="docs/CV.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline">CV ↗</a>
+      </div>
+    </div>
 
-    <!-- CV -->
-    <section id="cv" class="section">
-        <div class="content">
-            <h2>Academic Path</h2>
-            <ul>
-              <li><b>2023-present :</b> PhD in Statistics at the <a href="https://irma.math.unistra.fr/" target="_blank" rel="noopener noreferrer">IRMA laboratory</a> of the Université de Strasbourg under the supervision of <a href="https://irma.math.unistra.fr/~birmele" target="_blank" rel="noopener noreferrer">Étienne Birmelé</a>.</li>
-                <li><b>2021-2023 :</b> Master's degree in Data Science and Complex Systems at the <a href="https://www.unistra.fr/" target="_blank" rel="noopener noreferrer">Université de Strasbourg</a>, Strasbourg, France.</li>
-                <li><b>2018-2021 :</b> Bachelor's degree in Computer Science at the <a href="https://www.uha.fr/fr/index.html" target="_blank" rel="noopener noreferrer">Université de Haute-Alsace</a>, Mulhouse, France.</li>
-            </ul>
-            <p>Here you can find my <a href="docs/CV.pdf" download>full CV</a>.</p>
+
+
+    <div class="scroll-hint" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research" data-screen-label="02 Research">
+    <div class="section-inner">
+      <div class="section-label reveal">02 — Research</div>
+      <h2 class="section-title reveal reveal-delay-1">Talks &<br>Publications</h2>
+
+      <div class="subsection-title reveal reveal-delay-2">Talks</div>
+      <ul class="talk-list">
+        <li class="talk-item reveal reveal-delay-1">
+          <div class="talk-date">Dec 2024</div>
+          <div>
+            <div class="talk-title">Statistical algorithm for the detection of drug interactions</div>
+            <div class="talk-venue">International Biometrics Conference — Atlanta, United States</div>
+          </div>
+        </li>
+        <li class="talk-item reveal reveal-delay-2">
+          <div class="talk-date">Dec 2024</div>
+          <div>
+            <div class="talk-title">Computational approaches to identifying adverse high-order drug combinations</div>
+            <div class="talk-venue">UiT — The Arctic University of Norway, Tromsø, Norway</div>
+          </div>
+        </li>
+        <li class="talk-item reveal reveal-delay-2">
+          <div class="talk-date">Nov 2024</div>
+          <div>
+            <div class="talk-title">Introduction to conformal prediction</div>
+            <div class="talk-venue">PhD Seminar — Strasbourg, France</div>
+          </div>
+        </li>
+        <li class="talk-item reveal reveal-delay-3">
+          <div class="talk-date">May 2024</div>
+          <div>
+            <div class="talk-title">Oral contribution</div>
+            <div class="talk-venue">Journées de Statistique — Bordeaux, France</div>
+          </div>
+        </li>
+        <li class="talk-item reveal reveal-delay-4">
+          <div class="talk-date">May 2024</div>
+          <div>
+            <div class="talk-title">MCMC and Genetic Algorithm methods for at-risk drug interactions</div>
+            <div class="talk-venue">PhD Seminar — Strasbourg, France</div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="subsection-title reveal">Publications</div>
+      <ul class="pub-list">
+        <li class="pub-item reveal reveal-delay-1">
+          <div class="pub-authors">J. Bangard, E. Holsbø, K. Svendsen, V. Perduca, E. Birmelé</div>
+          <div class="pub-title">
+            <a href="https://bangard.xyz/202509-bangard-detecting/" target="_blank" rel="noopener noreferrer">
+              Detecting adverse high-order drug interactions from individual case safety reports using computational statistics on disproportionality measures
+            </a>
+          </div>
+          <div class="pub-venue">COMPUTO — 2026</div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CV -->
+  <section id="cv" data-screen-label="03 CV">
+    <div class="section-inner">
+      <div class="section-label reveal">03 — Academic Path</div>
+      <h2 class="section-title reveal reveal-delay-1">Education</h2>
+
+      <ul class="timeline">
+        <li class="timeline-item reveal reveal-delay-1">
+          <div class="timeline-dot"></div>
+          <div>
+            <div class="timeline-period">2023 — Present</div>
+            <div class="timeline-role">PhD in Statistics</div>
+            <div class="timeline-place">
+              <a href="https://irma.math.unistra.fr/" target="_blank" rel="noopener noreferrer">IRMA Laboratory</a>,
+              Université de Strasbourg — supervised by
+              <a href="https://irma.math.unistra.fr/~birmele" target="_blank" rel="noopener noreferrer">Étienne Birmelé</a>
+            </div>
+          </div>
+        </li>
+        <li class="timeline-item reveal reveal-delay-2">
+          <div class="timeline-dot"></div>
+          <div>
+            <div class="timeline-period">2021 — 2023</div>
+            <div class="timeline-role">Master's in Data Science &amp; Complex Systems</div>
+            <div class="timeline-place">
+              <a href="https://www.unistra.fr/" target="_blank" rel="noopener noreferrer">Université de Strasbourg</a>, France
+            </div>
+          </div>
+        </li>
+        <li class="timeline-item reveal reveal-delay-3">
+          <div class="timeline-dot"></div>
+          <div>
+            <div class="timeline-period">2018 — 2021</div>
+            <div class="timeline-role">Bachelor's in Computer Science</div>
+            <div class="timeline-place">
+              <a href="https://www.uha.fr/fr/index.html" target="_blank" rel="noopener noreferrer">Université de Haute-Alsace</a>, Mulhouse, France
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="cv-download reveal">
+        <a href="docs/CV.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Full CV ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEACHING -->
+  <section id="teaching" data-screen-label="04 Teaching">
+    <div class="section-inner">
+      <div class="section-label reveal">04 — Teaching</div>
+      <h2 class="section-title reveal reveal-delay-1">Courses</h2>
+      <div class="course-grid">
+        <div class="course-card reveal reveal-delay-2">
+          <div class="course-period">Fall 2023 – 2026</div>
+          <div class="course-name">Introduction to Statistics for Biologists</div>
         </div>
-    </section>
-
-    <!-- Teaching -->
-    <section id="teaching" class="section">
-        <div class="content">
-            <h2>Teaching</h2>
-            <p>Brief information about the courses I teach</p>
-            <ul>
-                <li><b>Fall 2023 :</b> Introduction course to statistics for biologists.</li>
-                <li><b>Spring 2024 :</b> General mathematics for biologists.</li>
-                <li><b>Fall 2024 :</b> Introduction course to statistics for biologists.</li>
-                <li><b>Spring 2025 :</b> General mathematics for biologists.</li>
-            </ul>
+        <div class="course-card reveal reveal-delay-3">
+          <div class="course-period">Spring 2024 – 2026</div>
+          <div class="course-name">General Mathematics for Biologists</div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Contact -->
-    <section id="contact" class="section">
-        <div class="content">
-            <h2>Contact</h2>
-            <form action="https://formspree.io/f/xgvwqjnr" method="POST">
-                <label>
-                Your email:
-                    <input type="email" name="email" required>
-                </label>
-                <label>
-                Message me :
-                </label>
-                <textarea id="message" name="message" required></textarea>
-                <button type="submit">Send</button>
-                </form>
-            <p> You may also find me in my office at the <a href="https://mathinfo.unistra.fr/">UFR Math-Info</a> of Strasbourg, 7 Rue René Descartes, Strasbourg, office 404, 4th floor.</p>
-            <p> Mail : jbangard[at]math[dot]unistra[dot]fr</p>
+  <!-- CONTACT -->
+  <section id="contact" data-screen-label="05 Contact">
+    <div class="section-inner">
+      <div class="section-label reveal">05 — Contact</div>
+      <h2 class="section-title reveal reveal-delay-1">Get in Touch</h2>
+
+      <div class="contact-grid">
+        <div class="contact-info reveal reveal-delay-2">
+          <div class="contact-detail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <span>jbangard[at]math[dot]unistra[dot]fr</span>
+          </div>
+          <div class="contact-detail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
+            <span>Office 404, 4th floor — <a href="https://mathinfo.unistra.fr/" target="_blank" rel="noopener noreferrer">UFR Math-Info</a>, 7 Rue René Descartes, Strasbourg</span>
+          </div>
+          <div class="contact-detail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            <a href="https://github.com/JulesBa-Git" target="_blank" rel="noopener noreferrer">github.com/JulesBa-Git</a>
+          </div>
         </div>
-    </section>
 
-    <script src="script.js"></script>
+        <form action="https://formspree.io/f/xgvwqjnr" method="POST" class="reveal reveal-delay-3">
+          <div class="form-group">
+            <label for="email">Your email</label>
+            <input type="email" id="email" name="email" required placeholder="you@example.com">
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required placeholder="Hello Jules, I'd like to..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Jules Bangard</span>
+    <span>Université de Strasbourg · IRMA</span>
+  </footer>
+
+
+  <script>
+    // ─── STATE ───
+    const body = document.getElementById('body');
+    let palette = 'C';
+    let dark = false;
+
+    // Load saved prefs
+    try {
+      const saved = JSON.parse(localStorage.getItem('jb-prefs') || '{}');
+      if (saved.dark !== undefined) dark = saved.dark;
+    } catch(e) {}
+
+    function applyTheme() {
+      body.className = 'palette-' + palette + (dark ? ' dark' : '');
+      document.getElementById('dark-btn').textContent = dark ? 'Light' : 'Dark';
+      try { localStorage.setItem('jb-prefs', JSON.stringify({palette, dark})); } catch(e) {}
+    }
+
+    applyTheme();
+
+    // Dark toggle (navbar)
+    document.getElementById('dark-btn').addEventListener('click', () => {
+      dark = !dark; applyTheme();
+      window.parent.postMessage({type:'__edit_mode_set_keys', edits:{darkMode: dark}}, '*');
+    });
+
+    // ─── MOBILE MENU ───
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    document.querySelectorAll('.mob-link').forEach(l => {
+      l.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    // ─── SCROLL REVEAL ───
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ─── SMOOTH SCROLL ───
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          const offset = target.getBoundingClientRect().top + window.scrollY - 60;
+          window.scrollTo({top: offset, behavior: 'smooth'});
+        }
+      });
+    });
+  </script>
 </body>
 </html>
-
